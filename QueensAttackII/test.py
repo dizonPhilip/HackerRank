@@ -2,6 +2,17 @@ import unittest
 from queens_attack_ii import queensAttack, cleanup_obstacles
 
 class QueensAttackIITest(unittest.TestCase):
+    def test_1x1(self):
+        test_case = {
+            "n": 1,
+            "k": 0,
+            "r_q": 1,
+            "c_q": 1,
+            "obstacles": [],
+        }
+        num_attacks = queensAttack(**test_case)
+        self.assertEqual(0, num_attacks)
+
     def test_1(self):
         test_case = {
             "n": 4,

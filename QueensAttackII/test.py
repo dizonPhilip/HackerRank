@@ -1,5 +1,5 @@
 import unittest
-from queens_attack_ii import queensAttack, cleanup_obstacles
+from queens_attack_ii import queensAttack, get_direction_of_obstacle
 
 class QueensAttackIITest(unittest.TestCase):
     def test_1x1(self):
@@ -90,22 +90,77 @@ class QueensAttackIITest(unittest.TestCase):
         num_attacks = queensAttack(**test_case)
         self.assertEqual(11, num_attacks)
 
-    def test_cleanup_obstacles(self):
+    def test_get_direction_of_n_obstacle(self):
         test_case = {
-            "r_q" : 6,
-            "c_q" : 6,
-            "obstacles" : [ (1,1), (2,2), (1,6), (2,6), (1,11), (2,10), (6,11), (6, 10), (11, 11), (10, 10), (11,6), (10,6), (11,1), (10,2), (6,1), (6,2)] 
+            "r_q": 3,
+            "c_q": 3,
+            "obstacle": (1,3),
         }
-        filtered_obstacles = cleanup_obstacles(**test_case)
-        self.assertEqual((2,2), filtered_obstacles["min_nw"])
-        self.assertEqual((2,6), filtered_obstacles["min_n"])
-        self.assertEqual((2,10), filtered_obstacles["min_ne"])
-        self.assertEqual((6,10), filtered_obstacles["min_e"])
-        self.assertEqual((10,10), filtered_obstacles["min_se"])
-        self.assertEqual((10,6), filtered_obstacles["min_s"])
-        self.assertEqual((10,2), filtered_obstacles["min_sw"])
-        self.assertEqual((6,2), filtered_obstacles["min_w"])
+        direction = get_direction_of_obstacle(**test_case)
+        self.assertEqual("n", direction)
+    
+    def test_get_direction_of_ne_obstacle(self):
+        test_case = {
+            "r_q": 3,
+            "c_q": 3,
+            "obstacle": (2,4),
+        }
+        direction = get_direction_of_obstacle(**test_case)
+        self.assertEqual("ne", direction)
 
+    def test_get_direction_of_e_obstacle(self):
+        test_case = {
+            "r_q": 3,
+            "c_q": 3,
+            "obstacle": (3,4),
+        }
+        direction = get_direction_of_obstacle(**test_case)
+        self.assertEqual("e", direction)
+
+    def test_get_direction_of_se_obstacle(self):
+        test_case = {
+            "r_q": 3,
+            "c_q": 3,
+            "obstacle": (4,4),
+        }
+        direction = get_direction_of_obstacle(**test_case)
+        self.assertEqual("se", direction)
+
+    def test_get_direction_of_s_obstacle(self):
+        test_case = {
+            "r_q": 3,
+            "c_q": 3,
+            "obstacle": (4,3),
+        }
+        direction = get_direction_of_obstacle(**test_case)
+        self.assertEqual("s", direction)
+
+    def test_get_direction_of_sw_obstacle(self):
+        test_case = {
+            "r_q": 3,
+            "c_q": 3,
+            "obstacle": (4,2),
+        }
+        direction = get_direction_of_obstacle(**test_case)
+        self.assertEqual("sw", direction)
+
+    def test_get_direction_of_w_obstacle(self):
+        test_case = {
+            "r_q": 3,
+            "c_q": 3,
+            "obstacle": (3,2),
+        }
+        direction = get_direction_of_obstacle(**test_case)
+        self.assertEqual("w", direction)
+
+    def test_get_direction_of_nw_obstacle(self):
+        test_case = {
+            "r_q": 3,
+            "c_q": 3,
+            "obstacle": (1,1),
+        }
+        direction = get_direction_of_obstacle(**test_case)
+        self.assertEqual("nw", direction)
 
 if __name__ == "__main__":
     unittest.main()

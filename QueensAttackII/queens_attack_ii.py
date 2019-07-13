@@ -7,7 +7,14 @@ def queensAttack(n, k, r_q, c_q, obstacles):
     obstacles: coordinates of obstables (row,column)
     '''
 
-    queens_attacks = {
+    queens_attacks = get_all_the_queens_attacks(n, r_q, c_q)
+
+    reduce_the_queens_attacks_with_any_obstacles(r_q, c_q, queens_attacks, obstacles)
+
+    return sum(queens_attacks.values())
+
+def get_all_the_queens_attacks(n, r_q, c_q):
+    return {
         "n"  : (r_q - 1),
         "s"  : (n - r_q),
         "e"  : (n - c_q),
@@ -18,17 +25,16 @@ def queensAttack(n, k, r_q, c_q, obstacles):
         "sw" : min(n-r_q, c_q-1)
     }
 
+def reduce_the_queens_attacks_with_any_obstacles(r_q, c_q, queens_attacks, obstacles):
     for obstacle in obstacles:
         direction = get_direction_of_obstacle(obstacle, r_q, c_q)
-        obstacle_not_in_path_of_attack = True if direction is None else False
         
+        obstacle_not_in_path_of_attack = True if direction is None else False
         if obstacle_not_in_path_of_attack:
             continue
         
         reduced_attack_amount = calculate_reduced_attack_amount(obstacle, r_q, c_q)
         queens_attacks[direction] = min(queens_attacks[direction], reduced_attack_amount)
-    
-    return sum(queens_attacks.values())
 
 def get_direction_of_obstacle(obstacle, r_q, c_q):
     if is_obstacle_in_horizontal_path_of_attack(obstacle, r_q):
